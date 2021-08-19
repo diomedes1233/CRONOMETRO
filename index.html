@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+    <title>Simple Cronometro en javascript</title>
+    <meta name="title" content="Cronometro en javascript">
+    <meta name="description" content="Cronometro en javascript">
+    <meta name="keywords" content="código,cronometro,javascript">
+ 
+	<script>
+	var inicio=0;
+	var timeout=0;
+ 
+	function empezarDetener(elemento)
+	{
+		if(timeout==0)
+		{
+			// empezar el cronometro
+ 
+			elemento.value="Detener";
+ 
+			// Obtenemos el valor actual
+			inicio=vuelta=new Date().getTime();
+ 
+			// iniciamos el proceso
+			funcionando();
+		}else{
+			// detener el cronometro
+ 
+			elemento.value="Empezar";
+			clearTimeout(timeout);
+			timeout=0;
+		}
+	}
+ 
+	function funcionando()
+	{
+		// obteneos la fecha actual
+		var actual = new Date().getTime();
+ 
+		// obtenemos la diferencia entre la fecha actual y la de inicio
+		var diff=new Date(actual-inicio);
+ 
+		// mostramos la diferencia entre la fecha actual y la inicial
+		var result=LeadingZero(diff.getUTCHours())+":"+LeadingZero(diff.getUTCMinutes())+":"+LeadingZero(diff.getUTCSeconds());
+		document.getElementById('crono').innerHTML = result;
+ 
+		// Indicamos que se ejecute esta función nuevamente dentro de 1 segundo
+		timeout=setTimeout("funcionando()",1000);
+	}
+ 
+	/* Funcion que pone un 0 delante de un valor si es necesario */
+	function LeadingZero(Time) {
+		return (Time < 10) ? "0" + Time : + Time;
+	}
+
+	const ponerMarca = () => {
+        marcas.unshift(new Date() - tiempoInicio.getTime()); //devuelve el valor numérico correspondiente a la hora para la fecha especificada según la hora universal.
+        dibujarMarcas();
+    };
+    const dibujarMarcas = () => {
+        $contenedorMarcas.innerHTML = "";
+        for (const [indice, marca] of marcas.entries()) {
+            const $p = document.createElement("p");
+            $p.innerHTML = `<strong class="is-size-4">${
+                marcas.length - indice
+            }.</strong> ${milisegundosAMinutosYSegundos(marca)}`;
+            $p.classList.add("is-size-3");
+            $contenedorMarcas.append($p); //método inserta un conjunto de Nodeobjetos u DOMStringobjetos después del último hijo de Element
+        }
+    };
+
+	</script>
+ 
+	<style>
+        @import url('https://fonts.googleapis.com/css2?family=Merienda:wght@400;700&family=Permanent+Marker&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+}
+
+body{
+    display: flex;
+   
+    /* width: 30%; */
+    background-image: url("https://2.bp.blogspot.com/-TxFywKNE2Eo/WlV8WOOIxpI/AAAAAAADV6U/4E3BmqvN2ZIVA6g8_LqSxFxiEyk3xnogQCLcBGAs/s1600/nuevos%2Bpaisajes%2B2018%2By%2Bfondos%2Bbonitos%2Bpara%2Bcomputadoras%2By%2Btablets%2B%25286%2529.jpg");
+    z-index: -1;
+    
+}
+	
+    .cronometro_p{
+        display: flex;
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        margin-top: 150px;
+		
+        
+    }
+
+    .cronometro_p .container{
+        display: flex;
+        width: 400px;
+        height: 400px;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        background-color: rgb(169, 202, 224);
+        z-index: 10;
+        border-radius: 50%;
+		opacity: 60%;
+		font-size: 150%;
+		font-weight: lighter;
+
+    }
+   
+</style>
+</head>
+ 
+<body>
+ 
+
+    
+<div class="cronometro_p">
+    <div class="container">
+    <h1>Cronometro</h1>
+	<h2 id='crono'>00:00:00</h2>
+	<input type="button" value="Empezar" onclick="empezarDetener(this);">
+    </div>
+	<div class="">
+
+	</div>
+
+
+</div>
+
+ 
+</body>
+</html>
